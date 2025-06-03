@@ -1,54 +1,64 @@
-# React + TypeScript + Vite
+# Iranian Provinces and Cities Data
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains a comprehensive JSON dataset of Iranian provinces and their cities, including their corresponding codes.
 
-Currently, two official plugins are available:
+## Data Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The data is organized in a hierarchical structure:
+- Provinces (استان‌ها)
+- Cities (شهرها)
 
-## Expanding the ESLint configuration
+Each province contains:
+- `name`: The name of the province in Persian
+- `cities`: An array of cities belonging to that province
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Each city contains:
+- `name`: The name of the city in Persian
+- `code`: A unique numeric code for the city
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Example
+
+```json
+{
+  "name": "آذربایجان شرقی",
+  "cities": [
+    { "name": "آذرشهر", "code": 170 },
+    { "name": "اسکو", "code": 149 },
+    // ... more cities
+  ]
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Complete list of all Iranian provinces
+- Comprehensive city data for each province
+- Unique city codes for identification
+- Persian language support
+- UTF-8 encoding
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Usage
+
+The data is stored in `public/provinces.json` and can be used for:
+- Location-based applications
+- Address forms
+- Geographic data visualization
+- Administrative purposes
+
+## Data Source
+
+This dataset contains official administrative divisions of Iran, including:
+- 31 provinces
+- Over 400 cities
+- Official city codes
+
+## Technical Details
+
+- File Format: JSON
+- Encoding: UTF-8
+- Language: Persian
+- Structure: Hierarchical (Provinces > Cities)
+
+## License
+
+This data is provided for educational and development purposes. Please ensure proper attribution when using this data in your projects.

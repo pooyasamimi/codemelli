@@ -6,7 +6,7 @@ import { ThemeProvider } from "./contexts/providers/ThemeProvider.tsx";
 import DataProvider from "./contexts/providers/DataProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
+  <StrictMode>
     <DataProvider>
       <ThemeProvider defaultTheme="dark" storageKey="theme">
         <App />
