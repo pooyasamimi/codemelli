@@ -39,14 +39,14 @@ const Output = () => {
   return (
     <>
       <div className="flex justify-center items-center gap-4">
-        <div className="relative w-1/2">
+        <div className="relative sm:w-1/2">
           <Tooltip content="Your fake codemelli number">
             <Input
               ref={inputRef}
               readOnly
               placeholder="Select fields"
               value={codeMelli}
-              className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-5"
+              className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-3 sm:pl-5 "
               onClick={(e) => (e.currentTarget as HTMLInputElement).select()}
               onCopy={(e) => LSHandler(e)}
             ></Input>
@@ -75,7 +75,7 @@ const Output = () => {
         </Button>
       </div>
 
-      <div className="relative flex gap-5 justify-center">
+      <div className="relative flex gap-x-8 justify-center">
         <Tooltip content="Refresh Code">
           <Button
             className="rounded-full hover:bg-button-green"

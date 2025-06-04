@@ -48,7 +48,7 @@ const CheckCodeSection = () => {
     }
   }, []);
   return (
-    <div className='space-y-8 text-center py-10 border-[6px] border-dashed border-[#383b44] [border-image:url("/border-dash.png")_4]'>
+    <div className='space-y-8 text-center px-4 py-10 border-[6px] border-dashed border-[#383b44] [border-image:url("/border-dash.png")_4]'>
       <h1 className="text-xl font-bold"> Check Code Melli</h1>
 
       <div className="flex justify-center items-center gap-3">
@@ -56,7 +56,7 @@ const CheckCodeSection = () => {
           <Input
             ref={inputRef}
             placeholder="Enter Code Melli"
-            className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-5 mx-auto"
+            className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-3 sm:pl-5 mx-auto"
             onClick={(e) => (e.currentTarget as HTMLInputElement).select()}
             onChange={checkCodeHandler}
             value={code}
