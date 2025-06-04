@@ -60,12 +60,12 @@ const GenerateCodeForm = () => {
           <SelectContent className="w-32 md:w-40 lg:w-48">
             <div className="m-1">
               <Input
-              value={'1'}
+              value={'2'}
                 type="search"
                 placeholder="Search Province..."
                 onChange={(e) => setProvinceSearchValue(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
-                onTouchStart={e=>e.preventDefault()}
+                onTouchStart={e=>e.stopPropagation()}
               />
             </div>
             <SelectGroup>
