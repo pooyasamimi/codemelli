@@ -44,9 +44,9 @@ const Output = () => {
             <Input
               ref={inputRef}
               readOnly
-              placeholder="Select provinse & city"
+              placeholder="Select fields"
               value={codeMelli}
-              className="rounded-full ring-1 ring-ring  h-16 !text-xl placeholder:text-red-500 pl-5"
+              className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-5"
               onClick={(e) => (e.currentTarget as HTMLInputElement).select()}
               onCopy={(e) => LSHandler(e)}
             ></Input>
@@ -69,7 +69,7 @@ const Output = () => {
           onClick={handleCopy}
           type="button"
         >
-          <Tooltip content="Copy codemelli number">
+          <Tooltip content="Copy codemelli">
             <Copy className="!w-6 !h-6" />
           </Tooltip>
         </Button>
@@ -98,7 +98,7 @@ const Output = () => {
               History
             </DialogTrigger>
           </Tooltip>
-          <DialogContent className="p-3 absolute top-12 ml-32 z-10 rounded-md bg-muted-foreground dark:bg-background w-72 text-muted dark:text-foreground">
+          <DialogContent className="p-3 absolute top-12 z-10 rounded-md bg-muted-foreground dark:bg-background w-72 text-muted dark:text-foreground">
             <h2 className="text-lg">History of copied codes</h2>
             <div className="mt-3 space-y-2 tracking-widest">
               {copiedCodes.map((arg) => (

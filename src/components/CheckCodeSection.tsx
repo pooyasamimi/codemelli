@@ -56,7 +56,7 @@ const CheckCodeSection = () => {
           <Input
             ref={inputRef}
             placeholder="Enter Code Melli"
-            className="rounded-full ring-1 ring-ring h-16 !text-xl placeholder:text-red-500 pl-5 mx-auto"
+            className="rounded-full ring-1 ring-ring h-16 text-base sm:!text-xl placeholder:[word-spacing:-0.25em] placeholder:text-red-500 pl-5 mx-auto"
             onClick={(e) => (e.currentTarget as HTMLInputElement).select()}
             onChange={checkCodeHandler}
             value={code}
