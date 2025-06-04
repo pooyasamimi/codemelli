@@ -60,15 +60,12 @@ const GenerateCodeForm = () => {
           <SelectContent className="w-32 md:w-40 lg:w-48 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-h-[50vh] overflow-y-auto">
             <div className="m-1">
               <Input
-              value={'۳'}
+              value={'۴'}
                 type="search"
                 placeholder="Search Province..."
                 onChange={(e) => setProvinceSearchValue(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
-                onFocus={(e) => {
-                  e.currentTarget.select();
-                  window.scrollTo({ top: e.currentTarget.offsetTop - 100, behavior: 'smooth' });
-                }}
+                onTouchStart={(e) => e.currentTarget.select()}
               />
             </div>
             <SelectGroup>
