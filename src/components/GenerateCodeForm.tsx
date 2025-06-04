@@ -64,6 +64,7 @@ const GenerateCodeForm = () => {
                 placeholder="Search Province..."
                 onChange={(e) => setProvinceSearchValue(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
+                // onClick={e=>e.preventDefault()}
               />
             </div>
             <SelectGroup>
