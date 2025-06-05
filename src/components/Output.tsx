@@ -6,16 +6,23 @@ import { useCodeMelli } from "@/hooks/useCodeMelli";
 import { useRef, type ClipboardEvent } from "react";
 import useClipBoard from "@/hooks/useClipBoard";
 import { toast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+
 import QRCode from "react-qr-code";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const Output = () => {
   const { codeMelliGenerator, codeMelli } = useCodeMelli();
   const inputRef = useRef<HTMLInputElement>(null);
   const { copyToClipboard } = useClipBoard();
   const { getCopiedCodes, saveToLocalStorage } = useLocalStorage();
-  console.log(inputRef.current?.value);
 
   const copiedCodes: string[] = getCopiedCodes();
 
@@ -59,6 +66,10 @@ const Output = () => {
               <QrCode className="!w-6 !h-6 text-white mx-auto" />
             </DialogTrigger>
             <DialogContent className="p-3 absolute z-10 rounded-md bg-foreground top-[120%] left-[calc(100%_-_126px)]">
+              <VisuallyHidden>
+                <DialogDescription>show QR code</DialogDescription>
+                <DialogTitle>QR Code for Codemelli</DialogTitle>
+              </VisuallyHidden>
               <QRCode value={codeMelli} size={180} />
             </DialogContent>
           </Dialog>
@@ -99,10 +110,17 @@ const Output = () => {
             </DialogTrigger>
           </Tooltip>
           <DialogContent className="p-3 absolute top-12 z-10 rounded-md bg-muted-foreground dark:bg-background w-72 text-muted dark:text-foreground">
+            <VisuallyHidden>
+              aria-describedby="show all codes melli"
+              <DialogDescription>fdsfsfsdds</DialogDescription>
+              <DialogTitle>History of Copied Codes</DialogTitle>
+            </VisuallyHidden>
             <h2 className="text-lg">History of copied codes</h2>
             <div className="mt-3 space-y-2 tracking-widest">
-              {copiedCodes.map((arg) => (
-                <p className="">{arg}</p>
+              {copiedCodes.map((code) => (
+                <p className="bg-muted/60 rounded-md" key={code}>
+                  {code}
+                </p>
               ))}
             </div>
           </DialogContent>

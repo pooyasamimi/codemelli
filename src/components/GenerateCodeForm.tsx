@@ -1,110 +1,143 @@
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 import { useMemo, useState } from "react";
 import useData from "@/hooks/useData";
 import Output from "./Output";
 
 const GenerateCodeForm = () => {
-  const { data, setActiveCity, activeProvince, setActiveProvince } = useData();
+  const {
+    data,
+    setActiveCity,
+    activeProvince,
+    setActiveProvince,
+  }: {
+    data: Province[];
+    setActiveCity: (city: string) => void;
+    activeProvince: string;
+    setActiveProvince: (province: string) => void;
+  } = useData();
 
   const [provinceSearchValue, setProvinceSearchValue] = useState<string>("");
   const [citySearchValue, setCitySearchValue] = useState<string>("");
+  const [isProvincePopoverOpen, setIsProvincePopoverOpen] =
+    useState<boolean>(false);
+  const [isCityPopoverOpen, setIsCityPopoverOpen] = useState<boolean>(false);
+  const [activeCity, setLocalActiveCity] = useState<string>("");
 
-  // فیلتر استان‌ها بر اساس سرچ
-  const filteredProvinces = useMemo(() => {
-    if (provinceSearchValue.trim() === "")
-      return data
-        .map((item) => item.name)
-        .sort((a, b) => a.localeCompare(b, "fa"));
-    const filterProvinces = data
+  const filteredProvinces = useMemo<string[]>(() => {
+    const search = provinceSearchValue.trim();
+    return data
       .map((item) => item.name)
-      .filter((province) => province.includes(provinceSearchValue.trim()));
-    return filterProvinces.sort((a, b) => a.localeCompare(b, "fa"));
+      .filter((province) => province.includes(search))
+      .sort((a, b) => a.localeCompare(b, "fa"));
   }, [data, provinceSearchValue]);
 
-  // فیلتر شهرها بر اساس سرچ
-  const filteredcities = useMemo(() => {
-    if (citySearchValue.trim() === "")
-      return (
-        data
-          .find((item) => item.name === activeProvince)
-          ?.cities.sort((a, b) => a.name.localeCompare(b.name, "fa")) || []
-      );
-    const filterCities =
-      data
-        .find((item) => item.name === activeProvince)
-        ?.cities.filter((city) => city.name.includes(citySearchValue.trim())) ||
-      [];
-    return filterCities.sort((a, b) => a.name.localeCompare(b.name, "fa"));
+  const filteredcities = useMemo<City[]>(() => {
+    const province = data.find((item) => item.name === activeProvince);
+    const search = citySearchValue.trim();
+    return (
+      province?.cities
+        .filter((city) => city.name.includes(search))
+        .sort((a, b) => a.name.localeCompare(b.name, "fa")) || []
+    );
   }, [data, citySearchValue, activeProvince]);
 
   return (
-    <form action={"#"} className="flex flex-col gap-7">
+    <form action="#" className="flex flex-col gap-7">
       <div className="flex justify-center gap-x-8 gap-y-3.5 flex-wrap md:flex-nowrap">
-        <Select
-          onValueChange={(value) => {
-            setActiveProvince(value);
-            setProvinceSearchValue("");
-          }}
+        {/* Province */}
+        <Popover
+          open={isProvincePopoverOpen}
+          onOpenChange={setIsProvincePopoverOpen}
         >
-          <SelectTrigger className="w-32 h-12 md:w-40 lg:w-48">
-            <SelectValue placeholder="Select province" />
-          </SelectTrigger>
-          <SelectContent className="w-32 md:w-40 lg:w-48 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-h-[50vh] overflow-y-auto">
-            <div className="m-1">
-              <Input
-              value={'۴'}
-                type="search"
-                placeholder="Search Province..."
-                onChange={(e) => setProvinceSearchValue(e.target.value)}
-                onKeyDown={(e) => e.stopPropagation()}
-                onTouchStart={(e) => e.currentTarget.select()}
-              />
-            </div>
-            <SelectGroup>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-60 h-12 md:w-48">
+              {activeProvince || "Select province"}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-60 md:w-40 lg:w-48 p-2 max-h-[calc(100dvh-100px)] overflow-y-auto"
+            side="bottom"
+            avoidCollisions={false}
+          >
+            <Input
+              type="search"
+              placeholder="Search province"
+              value={provinceSearchValue}
+              onChange={(e) => setProvinceSearchValue(e.target.value)}
+              onKeyDown={(e) => e.stopPropagation()}
+              className="mb-2"
+            />
+            <div className="space-y-1">
               {filteredProvinces.map((province) => (
-                <SelectItem key={province} value={province}>
+                <Button
+                  key={province}
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    setActiveProvince(province);
+                    setProvinceSearchValue("");
+                    setIsProvincePopoverOpen(false);
+                    setLocalActiveCity("");
+                  }}
+                >
                   {province}
-                </SelectItem>
+                </Button>
               ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(value) => setActiveCity(value)}>
-          <SelectTrigger className="w-32 h-12 md:w-40 lg:w-48">
-            <SelectValue placeholder="Select city" />
-          </SelectTrigger>
-          <SelectContent className="w-32 md:w-40 lg:w-48">
-            <div className="m-1">
-              <Input
-                type="search"
-                placeholder="Search State..."
-                className=""
-                onChange={(e) => setCitySearchValue(e.target.value)}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
             </div>
-            <SelectGroup className="text-center">
-              {activeProvince ? (
-                filteredcities.map((city) => (
-                  <SelectItem key={city.name} value={city.name}>
-                    {city.name}
-                  </SelectItem>
-                ))
-              ) : (
-                <span className="text-red-500">Please select province</span>
-              )}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          </PopoverContent>
+        </Popover>
+
+        {/* City */}
+        <Popover open={isCityPopoverOpen} onOpenChange={setIsCityPopoverOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-60 h-12 md:w-48 justify-start"
+              disabled={!activeProvince}
+            >
+              {activeCity || "Select city"}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-60 md:w-40 lg:w-48 p-2 max-h-[calc(100dvh-100px)] overflow-y-auto"
+            side="bottom"
+            avoidCollisions={false}
+          >
+            <Input
+              type="search"
+              placeholder="جستجوی شهر..."
+              value={citySearchValue}
+              onChange={(e) => setCitySearchValue(e.target.value)}
+              onKeyDown={(e) => e.stopPropagation()}
+              className="mb-2"
+            />
+            <div className="space-y-1">
+              {filteredcities.map((city) => (
+                <Button
+                  key={city.code}
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    setLocalActiveCity(city.name);
+                    setActiveCity(city.name);
+                    setCitySearchValue("");
+                    setIsCityPopoverOpen(false);
+                  }}
+                >
+                  {city.name}
+                </Button>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
+
       <Output />
     </form>
   );
