@@ -11,7 +11,7 @@ const CheckCodeSection = () => {
 
   const validateCode = (value: string): string => {
     if (value.length > 10) return "Code must be 10 digits";
-    if (!/^[0-9]*$/.test(value)) return "Just allowed numbers";
+    if (!/^[0-9]*$/.test(value)) return "Just allowed English numbers";
     if (value.length === 10 && /^(\d)\1{9}$/.test(value)) return "invalid code";
     return "";
   };
@@ -64,22 +64,28 @@ const CheckCodeSection = () => {
         </Tooltip>
 
         {checkCode && (
-          <Check
-            className="bg-foreground text-green-500 p-2 rounded-full w-12 h-12"
-            aria-label="valid code"
-          />
+          <Tooltip content="The code melli entered is correct.">
+            <Check
+              className="bg-foreground text-green-500 p-2 rounded-full w-12 h-12"
+              aria-label="valid code"
+            />
+          </Tooltip>
         )}
         {!checkCode && code.length > 0 && (
-          <X
-            className="bg-foreground text-red-600 p-2 rounded-full w-12 h-12"
-            aria-label="invalid code"
-          />
+          <Tooltip content="The code melli entered is incorrect.">
+            <X
+              className="bg-foreground text-red-600 p-2 rounded-full w-12 h-12"
+              aria-label="invalid code"
+            />
+          </Tooltip>
         )}
         {code.length === 0 && (
-          <HelpCircle
-            className="bg-foreground text-muted p-2 rounded-full w-12 h-12"
-            aria-label="enter code"
-          />
+          <Tooltip content="Enter code melli.">
+            <HelpCircle
+              className="bg-foreground text-muted p-2 rounded-full w-12 h-12"
+              aria-label="enter code"
+            />
+          </Tooltip>
         )}
 
         {error && <p className="text-red-500">{error}</p>}

@@ -98,7 +98,7 @@ const GenerateCodeForm = () => {
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className="w-60 h-12 md:w-48 justify-start"
+              className="w-60 h-12 md:w-48"
               disabled={!activeProvince}
             >
               {activeCity || "Select city"}
